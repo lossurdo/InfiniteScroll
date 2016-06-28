@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void loadMore(int page, int totalItemsCount) {
                 new Async().execute();
-                adapter.notifyDataSetChanged();
-                Toast.makeText(MainActivity.this, "Page #" + page, Toast.LENGTH_SHORT).show();
-                Log.d("loadMore", "#" + allObjects.size());
             }
         });
 
@@ -65,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected JsonArray doInBackground(Void... params) {
             Log.d("doInBackground", "Chamando web service...");
+
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(URL)
@@ -95,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 allObjects.add(jsonElements.get(i).getAsJsonObject());
             }
             adapter.notifyDataSetChanged();
+            Log.d("loadMore", "#" + allObjects.size());
         }
     }
 
